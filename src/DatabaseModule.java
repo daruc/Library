@@ -79,9 +79,15 @@ public class DatabaseModule {
                 result[2] = rs.getString(3);    //surname
                 result[3] = rs.getString(4);    //address
                 Date birth = rs.getDate(5);     //date_of_birth
-                result[4] = birth.toString();
+                if (birth != null)
+                    result[4] = birth.toString();
+                else
+                    result[4] = "";
                 Integer privilages = new Integer(rs.getInt(6)); //privilages
-                result[5] = privilages.toString();
+                if (privilages != null)
+                    result[5] = privilages.toString();
+                else
+                    result[5] = "";
             }
             else {
                 throw new Exception("Employee doesn't exist.");

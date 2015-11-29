@@ -3,11 +3,11 @@ import javax.swing.*;
 /**
  * Created by darek on 28.11.2015.
  */
-public class MainFrame extends JFrame {
+public class MainFrame extends MyFrame {
     private String user;
 
     private JTabbedPane tabbedPane;
-    private JPanel infoPanel;
+    private InfoPanel infoPanel;
     private JPanel booksPanel;
     private JPanel clientsPanel;
     private JPanel alertsPanel;
@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
         setSize(700, 500);
 
         tabbedPane = new JTabbedPane();
-        infoPanel = new JPanel();
+        infoPanel = new InfoPanel(this, user, super.getDatabaseModule());
         booksPanel = new JPanel();
         clientsPanel = new JPanel();
         alertsPanel = new JPanel();
@@ -29,16 +29,11 @@ public class MainFrame extends JFrame {
         tabbedPane.addTab("Czytelnicy", null, clientsPanel, "Zarządzanie klientami");
         tabbedPane.addTab("Alarmy", null, alertsPanel, "Powiadomienia o nieoddanych w terminie książkach");
 
-        drawInfoPanel();
         add(tabbedPane);
     }
 
-    private void drawInfoPanel() {
-
-    }
-
-    public MainFrame(String title, String user) {
-        super(title);
+    public MainFrame(String title, String user, DatabaseModule databaseModule) {
+        super(title, databaseModule);
         this.user = user;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         drawGUI();

@@ -6,19 +6,18 @@ import java.awt.event.ActionListener;
 /**
  * Created by darek on 28.11.2015.
  */
-public class LoginFrame extends JFrame implements LoginButton.LoginInterface{
+public class LoginFrame extends MyFrame implements LoginButton.LoginInterface {
 
     private JLabel titleLabel;
-    private DatabaseModule databaseModule;
 
     @Override
     public void login() {
         String login = loginField.getText();
         String password = passwordField.getText();
 
-        if (databaseModule.checkLoginAndPassword(login, password)) {
+        if (getDatabaseModule().checkLoginAndPassword(login, password)) {
             setVisible(false);
-            EventQueue.invokeLater(() -> new MainFrame("System biblioteczny", login));
+            EventQueue.invokeLater(() -> new MainFrame("System biblioteczny", login, getDatabaseModule()));
             dispose();
         }
         else {
@@ -96,8 +95,7 @@ public class LoginFrame extends JFrame implements LoginButton.LoginInterface{
     }
 
     public LoginFrame(String title, DatabaseModule dbModule) throws HeadlessException {
-        super(title);
-        databaseModule = dbModule;
+        super(title, dbModule);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         buildGUI();
         setVisible(true);
