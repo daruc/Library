@@ -8,7 +8,8 @@ public class MainFrame extends MyFrame {
 
     private JTabbedPane tabbedPane;
     private InfoPanel infoPanel;
-    private JPanel booksPanel;
+    private BooksPanel booksPanel;
+    private AuthorsPanel authorsPanel;
     private JPanel clientsPanel;
     private JPanel alertsPanel;
 
@@ -20,11 +21,13 @@ public class MainFrame extends MyFrame {
 
         tabbedPane = new JTabbedPane();
         infoPanel = new InfoPanel(this, user, super.getDatabaseModule());
-        booksPanel = new JPanel();
+        booksPanel = new BooksPanel(this, user, getDatabaseModule());
+        authorsPanel = new AuthorsPanel(this, user, getDatabaseModule());
         clientsPanel = new JPanel();
         alertsPanel = new JPanel();
 
         tabbedPane.addTab("Informacje", null, infoPanel, "Ogólne informacje o zalogowanym użytkowniku");
+        tabbedPane.addTab("Autorzy", null, authorsPanel, "Zarządzanie autorami książek");
         tabbedPane.addTab("Książki", null, booksPanel, "Zarządzanie książkami");
         tabbedPane.addTab("Czytelnicy", null, clientsPanel, "Zarządzanie klientami");
         tabbedPane.addTab("Alarmy", null, alertsPanel, "Powiadomienia o nieoddanych w terminie książkach");
