@@ -81,6 +81,7 @@ public class InfoBookFrame extends MyFrame {
         description.setLineWrap(true);
         description.setEditable(false);
         description.setFont(isbn.getFont());
+        description.setWrapStyleWord(true);
         descriptionScroll = new JScrollPane(description);
         descriptionScroll.setSize(120, 140);
         descriptionPanel.setLayout(new BoxLayout(descriptionPanel, BoxLayout.X_AXIS));

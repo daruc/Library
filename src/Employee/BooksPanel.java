@@ -118,6 +118,20 @@ public class BooksPanel extends JPanel {
             }
         });
 
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int[] row = booksTable.getSelectedRows();
+                BooksTableModel model = (BooksTableModel) booksTable.getModel();
+
+                for (int i = 0; i < row.length; ++i) {
+                    Book book = model.getBook(row[i]);
+                    System.out.println(book.title);
+                }
+
+            }
+        });
+
         booksTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -131,6 +145,32 @@ public class BooksPanel extends JPanel {
                 }
             }
         });
+
+        booksTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selectedRows = booksTable.getSelectedRowCount();
+                if (selectedRows == 0) {
+                    deleteButton.setEnabled(false);
+                    editButton.setEnabled(false);
+                    borrowButton.setEnabled(false);
+                }
+                else if (selectedRows == 1) {
+                    deleteButton.setEnabled(true);
+                    editButton.setEnabled(true);
+                    borrowButton.setEnabled(true);
+                }
+                else {
+                    deleteButton.setEnabled(true);
+                    editButton.setEnabled(false);
+                    borrowButton.setEnabled(false);
+                }
+            }
+        });
+
+        deleteButton.setEnabled(false);
+        editButton.setEnabled(false);
+        borrowButton.setEnabled(false);
 
         PlainDocument doc = (PlainDocument) isbn.getDocument();
         doc.setDocumentFilter(new ISBNDocumentFilter());
