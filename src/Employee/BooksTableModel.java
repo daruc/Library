@@ -72,4 +72,8 @@ public class BooksTableModel extends AbstractTableModel {
         }
         return result;
     }
+
+    public Book getBook(int index) {
+        return books.get(index);
+    }
 }

@@ -1,13 +1,19 @@
 package Employee;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import Employee.DocumentFilters.ISBNDocumentFilter;
+import Employee.DataStructures.Book;
 import Employee.*;
 
 /**
@@ -109,6 +115,20 @@ public class BooksPanel extends JPanel {
 
                 booksTableModel = new BooksTableModel(books);
                 booksTable.setModel(booksTableModel);
+            }
+        });
+
+        booksTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JTable table = (JTable) e.getSource();
+                Point p = e.getPoint();
+                int row = table.rowAtPoint(p);
+                if (e.getClickCount() == 2) {
+                    BooksTableModel model = (BooksTableModel) booksTable.getModel();
+                    Book book = model.getBook(row);
+                    EventQueue.invokeLater(() -> new InfoBookFrame("Opis książki", dbModule, book));
+                }
             }
         });
 
