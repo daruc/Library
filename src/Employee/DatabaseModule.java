@@ -189,4 +189,26 @@ public class DatabaseModule {
 
         return success;
     }
+
+    public void removeBook(String isbn) {
+        CallableStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "{ call removebook(?) }";
+            st = con.prepareCall(sql);
+            st.setString(1, isbn);
+            st.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -6,15 +6,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import Employee.DocumentFilters.ISBNDocumentFilter;
 import Employee.DataStructures.Book;
 import Employee.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SelectionModel;
 
 /**
  * Created by darek on 29.11.2015.
@@ -121,14 +120,12 @@ public class BooksPanel extends JPanel {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int[] row = booksTable.getSelectedRows();
+                int row = booksTable.getSelectedRow();
                 BooksTableModel model = (BooksTableModel) booksTable.getModel();
 
-                for (int i = 0; i < row.length; ++i) {
-                    Book book = model.getBook(row[i]);
-                    System.out.println(book.title);
-                }
-
+                Book book = model.getBook(row);
+                dbModule.removeBook(book.isbn);
+                model.removeRow(row);
             }
         });
 
@@ -155,18 +152,15 @@ public class BooksPanel extends JPanel {
                     editButton.setEnabled(false);
                     borrowButton.setEnabled(false);
                 }
-                else if (selectedRows == 1) {
+                else {
                     deleteButton.setEnabled(true);
                     editButton.setEnabled(true);
                     borrowButton.setEnabled(true);
                 }
-                else {
-                    deleteButton.setEnabled(true);
-                    editButton.setEnabled(false);
-                    borrowButton.setEnabled(false);
-                }
             }
         });
+
+        booksTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         deleteButton.setEnabled(false);
         editButton.setEnabled(false);

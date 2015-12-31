@@ -76,4 +76,9 @@ public class BooksTableModel extends AbstractTableModel {
     public Book getBook(int index) {
         return books.get(index);
     }
+
+    public void removeRow(int index) {
+        fireTableRowsDeleted(index, index);
+        books.remove(index);
+    }
 }
