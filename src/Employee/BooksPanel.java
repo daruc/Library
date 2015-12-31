@@ -1,5 +1,14 @@
+package Employee;
+
 import javax.swing.*;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import Employee.DocumentFilters.ISBNDocumentFilter;
+import Employee.*;
 
 /**
  * Created by darek on 29.11.2015.
@@ -13,6 +22,8 @@ public class BooksPanel extends JPanel {
     private JLabel searchDescription;
 
     private JPanel searchPanel;
+    private JLabel isbnDescription;
+    private JTextField isbn;
     private JLabel titleDescription;
     private JTextField title;
     private JLabel genreDescription;
@@ -30,7 +41,8 @@ public class BooksPanel extends JPanel {
     private JButton borrowButton;
 
     private JScrollPane scrollPane;
-    private BooksTable booksTable;
+    private JTable booksTable;
+    private BooksTableModel booksTableModel;
 
 
     public BooksPanel(MyFrame frame, String user, DatabaseModule dbModule) {
@@ -43,13 +55,17 @@ public class BooksPanel extends JPanel {
 
         searchDescription = new JLabel("Wyszukiwanie");
         searchPanel = new JPanel();
-        searchPanel.setLayout(new GridLayout(3, 2));
+        searchPanel.setLayout(new GridLayout(4, 2));
+        isbnDescription = new JLabel("ISBN ");
         titleDescription = new JLabel("Tytuł ");
         genreDescription = new JLabel("Gatunek ");
         authorDesciption = new JLabel("Autor ");
+        isbn = new JTextField();
         title = new JTextField();
         genre = new JTextField();
         author = new JTextField();
+        searchPanel.add(isbnDescription);
+        searchPanel.add(isbn);
         searchPanel.add(titleDescription);
         searchPanel.add(title);
         searchPanel.add(genreDescription);
@@ -66,6 +82,39 @@ public class BooksPanel extends JPanel {
         deleteButton = new JButton("Usuń");
         editButton = new JButton("Edytuj");
         borrowButton = new JButton("Wypożycz");
+
+        booksTable = new JTable();
+        booksTable.getTableHeader().setReorderingAllowed(false);
+
+        //Temporary tableModel
+        booksTable.setModel(new BooksTableModel(new ArrayList<Employee.DataStructures.Book>()));
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(() -> new AddBookFrame("Dodaj książkę", dbModule));
+            }
+        });
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String strIsbn = isbn.getText();
+                String strTitle = title.getText();
+                String strGenre = genre.getText();
+                String strAuthor = author.getText();
+
+                ArrayList<Employee.DataStructures.Book> books = dbModule.getBooks(strIsbn,
+                        strTitle, strGenre, strAuthor);
+
+                booksTableModel = new BooksTableModel(books);
+                booksTable.setModel(booksTableModel);
+            }
+        });
+
+        PlainDocument doc = (PlainDocument) isbn.getDocument();
+        doc.setDocumentFilter(new ISBNDocumentFilter());
+
         managementPanel.add(addButton);
         managementPanel.add(deleteButton);
         managementPanel.add(editButton);
@@ -85,7 +134,7 @@ public class BooksPanel extends JPanel {
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         sidebarPanel.add(managementPanel);
 
-        booksTable = new BooksTable(dbModule);
+
         scrollPane = new JScrollPane(booksTable);
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

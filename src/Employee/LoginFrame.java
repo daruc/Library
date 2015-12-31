@@ -1,3 +1,5 @@
+package Employee;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,7 +56,7 @@ public class LoginFrame extends MyFrame implements LoginButton.LoginInterface {
         Font font = new Font(loginButton.getFont().getName(), Font.BOLD, loginButton.getFont().getSize());
         loginButton.setFont(font);
 
-        font = new Font(titleLabel.getFont().getName(), Font.BOLD, titleLabel.getFont().getSize() + 10);
+        font = new Font(titleLabel.getFont().getName(), Font.BOLD, titleLabel.getFont().getSize() + 5);
         titleLabel.setFont(font);
 
 
@@ -85,8 +87,8 @@ public class LoginFrame extends MyFrame implements LoginButton.LoginInterface {
 
         jPanel.setLocation(80, 80);
         jPanel.setSize(200, 100);
-        titleLabel.setSize(400, 50);
-        titleLabel.setLocation(10, 10);
+        titleLabel.setSize(350, 50);
+        titleLabel.setLocation(50, 10);
 
         add(titleLabel);
         add(jPanel);
@@ -97,6 +99,7 @@ public class LoginFrame extends MyFrame implements LoginButton.LoginInterface {
     public LoginFrame(String title, DatabaseModule dbModule) throws HeadlessException {
         super(title, dbModule);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         buildGUI();
         setVisible(true);
         setLocationRelativeTo(null);

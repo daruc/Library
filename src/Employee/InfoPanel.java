@@ -1,3 +1,5 @@
+package Employee;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -43,6 +45,7 @@ public class InfoPanel extends JPanel {
 
 
         informations = new JLabel("Informacje o zalogowanym pracowniku");
+        informations.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginDescription = new JLabel("Login: ");
         login = new JLabel(userInfo[0]);
         nameDescription = new JLabel("Imię: ");
@@ -57,7 +60,7 @@ public class InfoPanel extends JPanel {
         privileges = new JLabel(userInfo[5]);
 
         logoutButton = new LogoutButton("Wyloguj", frame);
-        logoutButton.setAlignmentX(Component.BOTTOM_ALIGNMENT);
+        logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         Font font = login.getFont();
         font = new Font(font.getName(), font.getStyle(), font.getSize()+8);
@@ -78,7 +81,7 @@ public class InfoPanel extends JPanel {
 
 
         panel = new JPanel();
-        panel.setMaximumSize(new Dimension(300, 180));
+        panel.setMaximumSize(new Dimension(500, 180));
 
         panel.setLayout(new GridLayout(6, 2));
         panel.add(loginDescription);

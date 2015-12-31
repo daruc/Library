@@ -1,3 +1,5 @@
+package Employee;
+
 import javax.swing.*;
 
 /**
@@ -9,9 +11,9 @@ public class MainFrame extends MyFrame {
     private JTabbedPane tabbedPane;
     private InfoPanel infoPanel;
     private BooksPanel booksPanel;
-    private AuthorsPanel authorsPanel;
-    private JPanel clientsPanel;
+    private ClientsPanel clientsPanel;
     private JPanel alertsPanel;
+    private JPanel adminPanel;
 
     //infoPanel
 
@@ -22,15 +24,15 @@ public class MainFrame extends MyFrame {
         tabbedPane = new JTabbedPane();
         infoPanel = new InfoPanel(this, user, super.getDatabaseModule());
         booksPanel = new BooksPanel(this, user, getDatabaseModule());
-        authorsPanel = new AuthorsPanel(this, user, getDatabaseModule());
-        clientsPanel = new JPanel();
+        clientsPanel = new ClientsPanel(this, user, getDatabaseModule());
         alertsPanel = new JPanel();
+        adminPanel = new JPanel();
 
         tabbedPane.addTab("Informacje", null, infoPanel, "Ogólne informacje o zalogowanym użytkowniku");
-        tabbedPane.addTab("Autorzy", null, authorsPanel, "Zarządzanie autorami książek");
         tabbedPane.addTab("Książki", null, booksPanel, "Zarządzanie książkami");
         tabbedPane.addTab("Czytelnicy", null, clientsPanel, "Zarządzanie klientami");
         tabbedPane.addTab("Alarmy", null, alertsPanel, "Powiadomienia o nieoddanych w terminie książkach");
+        tabbedPane.addTab("Administrator", null, adminPanel, "Zarządzanie systemem");
 
         add(tabbedPane);
     }
