@@ -1,8 +1,10 @@
 package Employee;
 
 import Employee.Buttons.AddClientButton;
+import Employee.DocumentFilters.PositiveIntegerDocumentFilter;
 
 import javax.swing.*;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,6 +93,18 @@ public class AddClientFrame extends MyFrame {
 
         saveButton.linkFields(name, surname, address, dateOfBirth,
                 maxBorrowed, daysToReturnBook, privileges, password);
+
+        saveButton.setPreferredSize(new Dimension(80, 25));
+        cancelButton.setPreferredSize(new Dimension(80, 25));
+
+        PlainDocument doc = (PlainDocument) maxBorrowed.getDocument();
+        doc.setDocumentFilter(new PositiveIntegerDocumentFilter());
+
+        doc = (PlainDocument) daysToReturnBook.getDocument();
+        doc.setDocumentFilter(new PositiveIntegerDocumentFilter());
+
+        doc = (PlainDocument) privileges.getDocument();
+        doc.setDocumentFilter((new PositiveIntegerDocumentFilter()));
 
         panelButtons = new JPanel();
         panelButtons.add(cancelButton);
