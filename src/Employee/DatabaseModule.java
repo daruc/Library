@@ -278,6 +278,8 @@ public class DatabaseModule {
                 client.days_to_return_book = rs.getInt(7);
                 client.privileges = rs.getInt(8);
                 client.password = rs.getString(9);
+
+                clients.add(client);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -288,5 +290,6 @@ public class DatabaseModule {
                 e.printStackTrace();
             }
         }
+        return clients;
     }
 }

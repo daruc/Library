@@ -109,10 +109,10 @@ public class ClientsPanel extends JPanel {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String strName = "";
-                String strSurname = "";
+                String strName = name.getText();
+                String strSurname = surname.getText();
 
-                ArrayList<Client> clients = databaseModule.getClients(String name, String surname);
+                ArrayList<Client> clients = databaseModule.getClients(strName, strSurname);
                 ClientsTableModel model = new ClientsTableModel(clients);
                 clientsTable.setModel(model);
             }
