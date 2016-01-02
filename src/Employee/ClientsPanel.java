@@ -135,6 +135,13 @@ public class ClientsPanel extends JPanel {
             }
         });
 
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(() -> new AddClientFrame("Dodak klienta", databaseModule));
+            }
+        });
+
         scrollPane = new JScrollPane(clientsTable);
         scrollPane.setSize(390, scrollPane.getHeight());
 
