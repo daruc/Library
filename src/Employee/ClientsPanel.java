@@ -1,7 +1,12 @@
 package Employee;
 
+import Employee.DataStructures.Client;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by darek on 04.12.2015.
@@ -27,7 +32,7 @@ public class ClientsPanel extends JPanel {
     private JButton editButton;
     private JButton deleteButton;
 
-    private ClientsTable clientsTable;
+    private JTable clientsTable;
     private JScrollPane scrollPane;
 
     private JLabel booksDescription;
@@ -95,7 +100,24 @@ public class ClientsPanel extends JPanel {
         sidebarPanel.add(booksPanel);
 
 
-        clientsTable = new ClientsTable(databaseModule);
+        clientsTable = new JTable();
+        clientsTable.getTableHeader().setReorderingAllowed(false);
+
+        //temporary model
+        clientsTable.setModel(new ClientsTableModel(new ArrayList<Client>()));
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String strName = "";
+                String strSurname = "";
+
+                ArrayList<Client> clients = databaseModule.getClients(String name, String surname);
+                ClientsTableModel model = new ClientsTableModel(clients);
+                clientsTable.setModel(model);
+            }
+        });
+
         scrollPane = new JScrollPane(clientsTable);
         scrollPane.setSize(390, scrollPane.getHeight());
 

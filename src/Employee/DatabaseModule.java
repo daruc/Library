@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 import Employee.DataStructures.Book;
+import Employee.DataStructures.Client;
 
 /**
  * Created by darek on 28.11.2015.
@@ -252,5 +253,40 @@ public class DatabaseModule {
             }
         }
         return success;
+    }
+
+    public ArrayList<Client> getClients(String name, String surname) {
+        ArrayList<Client> clients = new ArrayList<Client>();
+
+        PreparedStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+            String sql = "{ SELECT * FROM getclients(?,?) }";
+            st = con.prepareCall(sql);
+            st.setString(1, name);
+            st.setString(2, surname);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Client client = new Client();
+                client.name = rs.getString(1);
+                client.surname = rs.getString(2);
+                client.address = rs.getString(3);
+                client.date_of_birth = rs.getDate(4);
+                client.max_borrowed = rs.getInt(5);
+                client.borrowed = rs.getInt(6);
+                client.days_to_return_book = rs.getInt(7);
+                client.privileges = rs.getInt(8);
+                client.password = rs.getString(9);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
