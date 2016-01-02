@@ -100,6 +100,15 @@ public class BooksPanel extends JPanel {
                 EventQueue.invokeLater(() -> new AddBookFrame("Dodaj książkę", dbModule));
             }
         });
+        BooksPanel thisPanel = this;
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = booksTable.getSelectedRow();
+                Book book = booksTableModel.getBook(row);
+                EventQueue.invokeLater(() -> new EditBookFrame("Edytuj książkę", dbModule, thisPanel, book));
+            }
+        });
 
         searchButton.addActionListener(new ActionListener() {
             @Override
@@ -194,5 +203,9 @@ public class BooksPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         add(sidebarPanel);
         add(scrollPane);
+    }
+
+    public JTable getTable() {
+        return booksTable;
     }
 }

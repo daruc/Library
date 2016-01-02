@@ -85,7 +85,7 @@ public class DatabaseModule {
                 book.isbn = rs.getString(1);
                 book.title = rs.getString(2);
                 book.author = rs.getString(3);
-                book.genre = rs.getString(4);
+                book.genre = rs.getString(4).trim();
                 book.description = rs.getString(5);
                 book.number_of_books = rs.getInt(6);
                 book.borrowed = rs.getInt(7);
@@ -157,6 +157,8 @@ public class DatabaseModule {
             return false;
         if (title.equals(""))
             return false;
+        if (numberOfBooks.equals(""))
+            return false;
 
         boolean success = false;
         CallableStatement st = null;
@@ -210,5 +212,45 @@ public class DatabaseModule {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean updateBook(String targetIsbn,String isbn, String title,
+                              String author, String genre, String numberOfBooks,
+                           String description) {
+        if (isbn.equals(""))
+            return false;
+        if (title.equals(""))
+            return false;
+        if (numberOfBooks.equals(""))
+            return false;
+
+        CallableStatement st = null;
+        boolean success = false;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+            String sql = "{call updatebook(?,?,?,?,?,?,?)}";
+            st = con.prepareCall(sql);
+            st.setString(1, targetIsbn);
+            st.setString(2, isbn);
+            st.setString(3, title);
+            st.setString(4, author);
+            st.setString(5, genre);
+            st.setInt(6, Integer.valueOf(numberOfBooks));
+            st.setString(7, description);
+
+            st.execute();
+            success = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            success = false;
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return success;
     }
 }

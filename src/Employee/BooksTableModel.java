@@ -81,4 +81,15 @@ public class BooksTableModel extends AbstractTableModel {
         fireTableRowsDeleted(index, index);
         books.remove(index);
     }
+
+    public void updateRow(int row, Book book) {
+        fireTableRowsUpdated(row, row);
+        Book b = books.get(row);
+        b.isbn = book.isbn;
+        b.title = book.title;
+        b.author = book.author;
+        b.genre = book.genre;
+        b.description = book.description;
+        b.number_of_books = book.number_of_books;
+    }
 }
