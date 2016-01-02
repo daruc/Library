@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -105,6 +107,21 @@ public class ClientsPanel extends JPanel {
 
         //temporary model
         clientsTable.setModel(new ClientsTableModel(new ArrayList<Client>()));
+
+        clientsTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JTable table = (JTable) e.getSource();
+                Point p = e.getPoint();
+                int row = table.rowAtPoint(p);
+                if (e.getClickCount() == 2) {
+                    ClientsTableModel model = (ClientsTableModel) clientsTable.getModel();
+                    Client client = model.getClient(row);
+                    EventQueue.invokeLater(() -> new InfoClientFrame("Szczegóły klienta",
+                            databaseModule, client));
+                }
+            }
+        });
 
         searchButton.addActionListener(new ActionListener() {
             @Override

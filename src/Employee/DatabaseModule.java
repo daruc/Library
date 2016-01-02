@@ -262,7 +262,7 @@ public class DatabaseModule {
         try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
                 properties.getProperty("login"),
                 properties.getProperty("password"))) {
-            String sql = "{ SELECT * FROM getclients(?,?) }";
+            String sql = "SELECT * FROM getclients(?,?)";
             st = con.prepareCall(sql);
             st.setString(1, name);
             st.setString(2, surname);
