@@ -15,4 +15,5 @@ public class Client {
     public int days_to_return_book;
     public int privileges;
     public String password;
+    public int id;
 }

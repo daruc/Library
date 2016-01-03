@@ -278,6 +278,7 @@ public class DatabaseModule {
                 client.days_to_return_book = rs.getInt(7);
                 client.privileges = rs.getInt(8);
                 client.password = rs.getString(9);
+                client.id = rs.getInt(10);
 
                 clients.add(client);
             }
@@ -324,6 +325,55 @@ public class DatabaseModule {
             st.setInt(6, Integer.valueOf(daysToReturnBook));
             st.setInt(7, Integer.valueOf(privileges));
             st.setString(8, password);
+
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            success = false;
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return success;
+    }
+
+    public boolean updateClient(String name, String surname, String address,
+                                String dateOfBirth, String maxBorrowed,
+                                String daysToReturnBook, String privileges,
+                                String password, int intBorrowed, int id) {
+        if (surname.equals(""))
+            return false;
+        if (privileges.equals(""))
+            return false;
+        if (daysToReturnBook.equals(""))
+            return false;
+        if (maxBorrowed.equals(""))
+            return false;
+        if (password.equals(""))
+            return false;
+
+        boolean success = true;
+        PreparedStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "{ call updateclient(?,?,?,?,?,?,?,?,?,?) }";
+            st = con.prepareCall(sql);
+            st.setString(1, name);
+            st.setString(2, surname);
+            st.setString(3, address);
+            st.setDate(4, Date.valueOf(dateOfBirth));
+            st.setInt(5, Integer.valueOf(maxBorrowed));
+            st.setInt(6, Integer.valueOf(daysToReturnBook));
+            st.setInt(7, Integer.valueOf(privileges));
+            st.setString(8, password);
+            st.setInt(9, intBorrowed);
+            st.setInt(10, id);
 
             st.execute();
         } catch (SQLException e) {

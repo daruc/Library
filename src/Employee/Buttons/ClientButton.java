@@ -1,6 +1,7 @@
 package Employee.Buttons;
 
 import Employee.DatabaseModule;
+import Employee.EditClientFrame;
 import Employee.MyFrame;
 
 import javax.swing.*;
@@ -18,13 +19,18 @@ public class ClientButton extends JButton {
     protected JTextField privileges;
     protected JTextField password;
 
-    protected MyFrame ownerFrame;
     protected DatabaseModule dbModule;
+    protected MyFrame ownerFrame;
 
-    public ClientButton(String title, MyFrame owner, DatabaseModule dbModule) {
+    public ClientButton(String title, DatabaseModule dbModule) {
         super(title);
-        ownerFrame = owner;
         this.dbModule = dbModule;
+    }
+
+    public ClientButton(String title, MyFrame ownerFrame, DatabaseModule dbModule) {
+        super(title);
+        this.dbModule = dbModule;
+        this.ownerFrame = ownerFrame;
     }
 
     public void linkFields(JTextField name, JTextField surname, JTextField address, JTextField dateOfBirth,

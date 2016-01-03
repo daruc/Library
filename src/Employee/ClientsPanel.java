@@ -135,6 +135,20 @@ public class ClientsPanel extends JPanel {
             }
         });
 
+        clientsTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        ClientsPanel thisPanel = this;
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = clientsTable.getSelectedRow();
+                ClientsTableModel model = (ClientsTableModel) clientsTable.getModel();
+                Client client = model.getClient(row);
+                EventQueue.invokeLater(() -> new EditClientFrame("Edytuj klienta", databaseModule,
+                        thisPanel, (MyFrame) frame, client));
+            }
+        });
+
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -160,4 +174,6 @@ public class ClientsPanel extends JPanel {
 
         drawGUI();
     }
+
+    public JTable getTable() { return clientsTable; }
 }
