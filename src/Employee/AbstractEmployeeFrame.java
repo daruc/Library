@@ -105,10 +105,10 @@ abstract public class AbstractEmployeeFrame extends JFrame {
         this.dbModule = dbModule;
 
         drawGUI();
-        setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
-        setSize(270, 230);
+        setSize(270, 210);
+        setLocationRelativeTo(null);
     }
 
     abstract public void setSaveButton();
