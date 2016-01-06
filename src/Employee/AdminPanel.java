@@ -1,8 +1,11 @@
 package Employee;
 
+import Employee.Buttons.UpdateEmployeeButton;
 import Employee.DataStructures.Employee;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,6 +66,21 @@ public class AdminPanel extends JPanel {
             }
         });
 
+        employeesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int count = employeesTable.getSelectedRowCount();
+                if (count == 1) {
+                    edit.setEnabled(true);
+                    remove.setEnabled(true);
+                }
+                else {
+                    edit.setEnabled(false);
+                    remove.setEnabled(false);
+                }
+            }
+        });
+
         AdminPanel thisPanel = this;
         add.addActionListener(new ActionListener() {
             @Override
@@ -70,6 +88,31 @@ public class AdminPanel extends JPanel {
                 EventQueue.invokeLater(() -> new AddEmployeeFrame("Dodaj pracownika", thisPanel, dbModule));
             }
         });
+
+        edit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = employeesTable.getSelectedRow();
+                EmployeesTableModel model = (EmployeesTableModel) employeesTable.getModel();
+                Employee employee = model.getEmployee(row);
+                EventQueue.invokeLater(() -> new EditEmployeeFrame("Aktualizuj pracownika",
+                        thisPanel, dbModule, employee));
+            }
+        });
+
+        remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = employeesTable.getSelectedRow();
+                EmployeesTableModel model = (EmployeesTableModel) employeesTable.getModel();
+                Employee employee = model.getEmployee(row);
+                dbModule.removeEmployee(employee.id);
+                refreshTable();
+            }
+        });
+
+        edit.setEnabled(false);
+        remove.setEnabled(false);
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         sidePanel.setLayout(new GridLayout(4,1));

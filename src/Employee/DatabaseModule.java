@@ -495,4 +495,72 @@ public class DatabaseModule {
 
         return success;
     }
+
+    public boolean updateEmployee(String login, String name, String surname,
+                                  String address, String date, String privileges,
+                                  String password, int id) {
+        boolean success = true;
+        if (surname.equals(""))
+            return false;
+        if (privileges.equals(""))
+            return false;
+        if (login.equals(""))
+            return false;
+        if (date.equals(""))
+            return false;
+        if (password.equals(""))
+            return false;
+
+        PreparedStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "{ call updateemployee(?,?,?,?,?,?,?,?) }";
+            st = con.prepareCall(sql);
+            st.setString(1, login);
+            st.setString(2, name);
+            st.setString(3, surname);
+            st.setString(4, address);
+            st.setDate(5, Date.valueOf(date));
+            st.setInt(6, Integer.valueOf(privileges));
+            st.setString(7, password);
+            st.setInt(8, id);
+
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            success = false;
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return success;
+    }
+
+    public void removeEmployee(int id) {
+        CallableStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "{ call removeemployee(?) }";
+            st = con.prepareCall(sql);
+            st.setInt(1, id);
+            st.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
