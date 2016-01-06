@@ -3,6 +3,8 @@ package Employee;
 import Employee.DataStructures.Client;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -156,9 +158,45 @@ public class ClientsPanel extends JPanel {
             }
         });
 
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = clientsTable.getSelectedRow();
+                ClientsTableModel model = (ClientsTableModel) clientsTable.getModel();
+
+                Client client = model.getClient(row);
+                databaseModule.removeClient(client.id);
+                model.removeRow(row);
+            }
+        });
+
+        clientsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selectedRows = clientsTable.getSelectedRowCount();
+                if (selectedRows == 1) {
+                    editButton.setEnabled(true);
+                    deleteButton.setEnabled(true);
+                    borrowButton.setEnabled(true);
+                    returnButton.setEnabled(true);
+                }
+                else {
+                    editButton.setEnabled(false);
+                    deleteButton.setEnabled(false);
+                    borrowButton.setEnabled(false);
+                    returnButton.setEnabled(false);
+                }
+            }
+        });
+
+        editButton.setEnabled(false);
+        deleteButton.setEnabled(false);
+        borrowButton.setEnabled(false);
+        returnButton.setEnabled(false);
+
+
         scrollPane = new JScrollPane(clientsTable);
         scrollPane.setSize(390, scrollPane.getHeight());
-
 
 
 

@@ -389,4 +389,26 @@ public class DatabaseModule {
 
         return success;
     }
+
+    public void removeClient(int id) {
+        CallableStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "{ call removeclient(?) }";
+            st = con.prepareCall(sql);
+            st.setInt(1, id);
+            st.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
