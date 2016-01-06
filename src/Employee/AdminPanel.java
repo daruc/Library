@@ -4,6 +4,10 @@ import Employee.DataStructures.Employee;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -43,6 +47,29 @@ public class AdminPanel extends JPanel {
 
         employeesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         employeesTable.getTableHeader().setReorderingAllowed(false);
+
+        employeesTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JTable table = (JTable) e.getSource();
+                Point p = e.getPoint();
+                int row = table.rowAtPoint(p);
+
+                if (e.getClickCount() == 2) {
+                    EmployeesTableModel model = (EmployeesTableModel) table.getModel();
+                    Employee employee = model.getEmployee(row);
+                    EventQueue.invokeLater(() -> new InfoEmployeeFrame("Opis pracownika", dbModule, employee));
+                }
+            }
+        });
+
+        AdminPanel thisPanel = this;
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(() -> new AddEmployeeFrame("Dodaj pracownika", thisPanel, dbModule));
+            }
+        });
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         sidePanel.setLayout(new GridLayout(4,1));

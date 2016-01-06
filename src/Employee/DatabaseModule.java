@@ -451,4 +451,48 @@ public class DatabaseModule {
 
         return employees;
     }
+
+    public boolean addEmployee(String strLogin, String strName, String strSurname, String strAddress,
+                               String strDate, String strPrivileges, String strPassword) {
+        boolean success = true;
+        if (strSurname.equals(""))
+            return false;
+        if (strPrivileges.equals(""))
+            return false;
+        if (strLogin.equals(""))
+            return false;
+        if (strDate.equals(""))
+            return false;
+        if (strPassword.equals(""))
+            return false;
+
+        PreparedStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "{ call addemployee(?,?,?,?,?,?,?) }";
+            st = con.prepareCall(sql);
+            st.setString(1, strLogin);
+            st.setString(2, strName);
+            st.setString(3, strSurname);
+            st.setString(4, strAddress);
+            st.setDate(5, Date.valueOf(strDate));
+            st.setInt(6, Integer.valueOf(strPrivileges));
+            st.setString(7, strPassword);
+
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            success = false;
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return success;
+    }
 }
