@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import Employee.DataStructures.Book;
 import Employee.DataStructures.Client;
+import Employee.DataStructures.Employee;
 
 /**
  * Created by darek on 28.11.2015.
@@ -410,5 +411,44 @@ public class DatabaseModule {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ArrayList<Employee> getEmployees() {
+        ArrayList<Employee> employees = new ArrayList<Employee>();
+
+        Statement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "SELECT * FROM getemployees();";
+            st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.id = rs.getInt(1);
+                employee.login = rs.getString(2);
+                employee.name = rs.getString(3);
+                employee.surname = rs.getString(4);
+                employee.address = rs.getString(5);
+                employee.date_of_birth = rs.getDate(6);
+                employee.privileges = rs.getInt(7);
+                employee.password = rs.getString(8);
+
+                employees.add(employee);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return employees;
     }
 }

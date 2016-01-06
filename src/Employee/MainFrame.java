@@ -13,7 +13,7 @@ public class MainFrame extends MyFrame {
     private BooksPanel booksPanel;
     private ClientsPanel clientsPanel;
     private JPanel alertsPanel;
-    private JPanel adminPanel;
+    private AdminPanel adminPanel;
 
     //infoPanel
 
@@ -26,7 +26,7 @@ public class MainFrame extends MyFrame {
         booksPanel = new BooksPanel(this, user, getDatabaseModule());
         clientsPanel = new ClientsPanel(this, user, getDatabaseModule());
         alertsPanel = new JPanel();
-        adminPanel = new JPanel();
+        adminPanel = new AdminPanel(this, user, getDatabaseModule());
 
         tabbedPane.addTab("Informacje", null, infoPanel, "Ogólne informacje o zalogowanym użytkowniku");
         tabbedPane.addTab("Książki", null, booksPanel, "Zarządzanie książkami");
