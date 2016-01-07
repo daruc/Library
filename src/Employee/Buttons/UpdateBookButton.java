@@ -39,8 +39,9 @@ public class UpdateBookButton extends BookButton
         if (number != null)
             strNumber = number.getText().toString();
         String targetIsbn = ((EditBookFrame) ownerFrame).getBook().isbn;
+        int targetId = ((EditBookFrame) ownerFrame).getBook().id;
         boolean success = dbModule.updateBook(targetIsbn,
-                strIsbn, strTitle, strAuthor, strGenre, strNumber, strDescription);
+                strIsbn, strTitle, strAuthor, strGenre, strNumber, strDescription, targetId);
 
         if (success) {
             ownerFrame.setVisible(false);

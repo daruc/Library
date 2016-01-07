@@ -10,4 +10,5 @@ public class Book {
     public String genre = "";
     public int number_of_books = 0;
     public int borrowed = 0;
+    public int id;
 }

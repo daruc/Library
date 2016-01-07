@@ -177,8 +177,8 @@ public class ClientsPanel extends JPanel {
                 if (selectedRows == 1) {
                     editButton.setEnabled(true);
                     deleteButton.setEnabled(true);
-                    borrowButton.setEnabled(true);
                     returnButton.setEnabled(true);
+                    borrowButton.setEnabled(true);
                 }
                 else {
                     editButton.setEnabled(false);
@@ -198,7 +198,24 @@ public class ClientsPanel extends JPanel {
         scrollPane = new JScrollPane(clientsTable);
         scrollPane.setSize(390, scrollPane.getHeight());
 
+        borrowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClientsTableModel model = (ClientsTableModel) clientsTable.getModel();
+                int row = clientsTable.getSelectedRow();
+                Client client = model.getClient(row);
 
+                if (client.borrowed < client.max_borrowed) {
+                    EventQueue.invokeLater(() -> new BorrowBookFrame(
+                            "Wypożycz czytelnikowi " + client.name + " " + client.surname, databaseModule, client));
+                }
+                else {
+                    JOptionPane.showMessageDialog(thisPanel, "Czytelnik osiągnął limit wypożyczeń.",
+                            "Wypożyczanie nieudane", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
 
         add(sidebarPanel);
         add(scrollPane);

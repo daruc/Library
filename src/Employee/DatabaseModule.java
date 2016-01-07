@@ -91,6 +91,7 @@ public class DatabaseModule {
                 book.description = rs.getString(5);
                 book.number_of_books = rs.getInt(6);
                 book.borrowed = rs.getInt(7);
+                book.id = rs.getInt(8);
                 books.add(book);
             }
         }
@@ -218,7 +219,7 @@ public class DatabaseModule {
 
     public boolean updateBook(String targetIsbn,String isbn, String title,
                               String author, String genre, String numberOfBooks,
-                           String description) {
+                           String description, int id) {
         if (isbn.equals(""))
             return false;
         if (title.equals(""))
@@ -231,7 +232,7 @@ public class DatabaseModule {
         try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
                 properties.getProperty("login"),
                 properties.getProperty("password"))) {
-            String sql = "{call updatebook(?,?,?,?,?,?,?)}";
+            String sql = "{call updatebook(?,?,?,?,?,?,?,?)}";
             st = con.prepareCall(sql);
             st.setString(1, targetIsbn);
             st.setString(2, isbn);
@@ -240,6 +241,7 @@ public class DatabaseModule {
             st.setString(5, genre);
             st.setInt(6, Integer.valueOf(numberOfBooks));
             st.setString(7, description);
+            st.setInt(8, id);
 
             st.execute();
             success = true;
@@ -551,6 +553,29 @@ public class DatabaseModule {
             String sql = "{ call removeemployee(?) }";
             st = con.prepareCall(sql);
             st.setInt(1, id);
+            st.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void borrowBook(int bookId, int clientId) {
+        CallableStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+            String sql = "{ call borrow(?,?) }";
+            st = con.prepareCall(sql);
+            st.setInt(1, bookId);
+            st.setInt(2, clientId);
+
             st.execute();
 
         } catch (SQLException e) {
