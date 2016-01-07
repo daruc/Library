@@ -217,6 +217,24 @@ public class ClientsPanel extends JPanel {
             }
         });
 
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClientsTableModel model = (ClientsTableModel) clientsTable.getModel();
+                int row = clientsTable.getSelectedRow();
+                Client client = model.getClient(row);
+
+                if (client.borrowed > 0) {
+                    EventQueue.invokeLater(() -> new ReturnBookFrame(
+                            "Oddaj książki czytelnika " + client.name + " " + client.surname, databaseModule, client));
+                }
+                else {
+                    JOptionPane.showMessageDialog(thisPanel, "Czytelnik nie posiada książek do oddania.",
+                            "Brak wypożyczonych książek", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
         add(sidebarPanel);
         add(scrollPane);
 

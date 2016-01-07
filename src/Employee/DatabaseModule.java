@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 import Employee.DataStructures.Book;
+import Employee.DataStructures.BorrowedBook;
 import Employee.DataStructures.Client;
 import Employee.DataStructures.Employee;
 
@@ -587,5 +588,64 @@ public class DatabaseModule {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ArrayList<BorrowedBook> getBorrowedBooks(int client_id) {
+        ArrayList<BorrowedBook> borrowedBooks = new ArrayList<BorrowedBook>();
+        PreparedStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "SELECT * FROM getborrowedbooks(?)";
+            st = con.prepareCall(sql);
+            st.setInt(1, client_id);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                BorrowedBook book = new BorrowedBook();
+                book.isbn = rs.getString(1);
+                book.borrowed = rs.getDate(2);
+                book.return_date = rs.getDate(3);
+                book.id = rs.getInt(4);
+
+                borrowedBooks.add(book);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return borrowedBooks;
+    }
+
+    public void returnBook(int orderId) {
+        PreparedStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "{ call returnbook(?) }";
+            st = con.prepareCall(sql);
+            st.setInt(1, orderId);
+
+            st.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

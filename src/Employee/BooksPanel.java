@@ -181,7 +181,7 @@ public class BooksPanel extends JPanel {
         managementPanel.add(addButton);
         managementPanel.add(deleteButton);
         managementPanel.add(editButton);
-        managementPanel.add(borrowButton);
+        //managementPanel.add(borrowButton);
 
         searchDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
         managementDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
