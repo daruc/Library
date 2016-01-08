@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
-import Employee.DataStructures.Book;
-import Employee.DataStructures.BorrowedBook;
-import Employee.DataStructures.Client;
-import Employee.DataStructures.Employee;
+
+import Employee.DataStructures.*;
 
 /**
  * Created by darek on 28.11.2015.
@@ -647,5 +645,62 @@ public class DatabaseModule {
             }
         }
 
+    }
+
+    public ArrayList<Alert> getAlerts() {
+        ArrayList<Alert> alerts = new ArrayList<Alert>();
+
+        PreparedStatement st = null;
+        try (Connection con = DriverManager.getConnection(properties.getProperty("url"),
+                properties.getProperty("login"),
+                properties.getProperty("password"))) {
+
+            String sql = "SELECT * FROM getalerts()";
+            st = con.prepareCall(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Book book = new Book();
+                book.id = rs.getInt(1);
+                book.title = rs.getString(2);
+                book.description = rs.getString(3);
+                book.isbn = rs.getString(4);
+                book.genre = rs.getString(5);
+                book.author = rs.getString(6);
+
+                Client client = new Client();
+                client.id = rs.getInt(7);
+                client.name = rs.getString(8);
+                client.surname = rs.getString(9);
+                client.address = rs.getString(10);
+                client.date_of_birth = rs.getDate(11);
+                client.max_borrowed = rs.getInt(12);
+                client.borrowed = rs.getInt(13);
+                client.days_to_return_book = rs.getInt(14);
+                client.privileges = rs.getInt(15);
+
+                Date borrow_date = rs.getDate(16);
+                Date return_date = rs.getDate(17);
+
+                Alert alert = new Alert();
+                alert.book = book;
+                alert.client = client;
+                alert.borrow_date = borrow_date;
+                alert.return_date = return_date;
+
+                alerts.add(alert);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (st != null) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return alerts;
     }
 }

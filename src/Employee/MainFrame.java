@@ -25,7 +25,7 @@ public class MainFrame extends MyFrame {
         infoPanel = new InfoPanel(this, user, super.getDatabaseModule());
         booksPanel = new BooksPanel(this, user, getDatabaseModule());
         clientsPanel = new ClientsPanel(this, user, getDatabaseModule());
-        alertsPanel = new JPanel();
+        alertsPanel = new AlertsPanel(this, getDatabaseModule());
         adminPanel = new AdminPanel(this, user, getDatabaseModule());
 
         tabbedPane.addTab("Informacje", null, infoPanel, "Ogólne informacje o zalogowanym użytkowniku");
