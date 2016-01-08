@@ -13,6 +13,7 @@ public class EditClientFrame extends AbstractClientFrame {
     private MyFrame ownerFrame;
 
     private void fillFileds() {
+        login.setText(client.login);
         name.setText(client.name);
         surname.setText(client.surname);
         address.setText(client.address);
@@ -40,7 +41,7 @@ public class EditClientFrame extends AbstractClientFrame {
     public void setSaveButton() {
         saveButton = new UpdateClientButton("Aktualizuj", getDatabaseModule());
 
-        saveButton.linkFields(name, surname, address, dateOfBirth,
+        saveButton.linkFields(login, name, surname, address, dateOfBirth,
                 maxBorrowed, daysToReturnBook, privileges, password);
         panelButtons.add(saveButton);
     }

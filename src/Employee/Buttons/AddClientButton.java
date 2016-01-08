@@ -19,6 +19,7 @@ public class AddClientButton extends ClientButton
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String strLogin = "";
         String strName = "";
         String strSurname = "";
         String strAddress = "";
@@ -28,6 +29,8 @@ public class AddClientButton extends ClientButton
         String strPrivileges = "";
         String strPassword = "";
 
+        if (login != null)
+            strLogin = login.getText();
         if (name != null)
             strName = name.getText();
         if (surname != null)
@@ -44,10 +47,12 @@ public class AddClientButton extends ClientButton
             strPrivileges = privileges.getText();
         if (password != null)
             strPassword = password.getText();
+        if (login != null)
+            strLogin = login.getText();
 
         boolean successs = dbModule.addClient(strName, strSurname,
                 strAddress, strDateOfBirth, strMaxBorrowed,
-                strDaysToReturnBook, strPrivileges, strPassword);
+                strDaysToReturnBook, strPrivileges, strPassword, strLogin);
         if (successs) {
             ownerFrame.setVisible(false);
             ownerFrame.dispose();

@@ -85,5 +85,6 @@ public class ClientsTableModel extends AbstractTableModel {
         c.days_to_return_book = client.days_to_return_book;
         c.privileges = client.privileges;
         c.password = client.password;
+        c.login = client.login;
     }
 }

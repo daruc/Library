@@ -281,6 +281,7 @@ public class DatabaseModule {
                 client.privileges = rs.getInt(8);
                 client.password = rs.getString(9);
                 client.id = rs.getInt(10);
+                client.login = rs.getString(11);
 
                 clients.add(client);
             }
@@ -299,7 +300,7 @@ public class DatabaseModule {
     public boolean addClient(String name, String surname, String address,
                              String dateOfBirth, String maxBorrowed,
                              String daysToReturnBook, String privileges,
-                             String password) {
+                             String password, String login) {
         if (surname.equals(""))
             return false;
         if (privileges.equals(""))
@@ -310,6 +311,8 @@ public class DatabaseModule {
             return false;
         if (password.equals(""))
             return false;
+        if (login.equals(""))
+            return false;
 
         boolean success = true;
         PreparedStatement st = null;
@@ -317,7 +320,7 @@ public class DatabaseModule {
                 properties.getProperty("login"),
                 properties.getProperty("password"))) {
 
-            String sql = "{ call addclient(?,?,?,?,?,?,?,?) }";
+            String sql = "{ call addclient(?,?,?,?,?,?,?,?,?) }";
             st = con.prepareCall(sql);
             st.setString(1, name);
             st.setString(2, surname);
@@ -327,6 +330,7 @@ public class DatabaseModule {
             st.setInt(6, Integer.valueOf(daysToReturnBook));
             st.setInt(7, Integer.valueOf(privileges));
             st.setString(8, password);
+            st.setString(9, login);
 
             st.execute();
         } catch (SQLException e) {
@@ -346,7 +350,7 @@ public class DatabaseModule {
     public boolean updateClient(String name, String surname, String address,
                                 String dateOfBirth, String maxBorrowed,
                                 String daysToReturnBook, String privileges,
-                                String password, int intBorrowed, int id) {
+                                String password, int intBorrowed, int id, String login) {
         if (surname.equals(""))
             return false;
         if (privileges.equals(""))
@@ -357,6 +361,8 @@ public class DatabaseModule {
             return false;
         if (password.equals(""))
             return false;
+        if (login.equals(""))
+            return false;
 
         boolean success = true;
         PreparedStatement st = null;
@@ -364,7 +370,7 @@ public class DatabaseModule {
                 properties.getProperty("login"),
                 properties.getProperty("password"))) {
 
-            String sql = "{ call updateclient(?,?,?,?,?,?,?,?,?,?) }";
+            String sql = "{ call updateclient(?,?,?,?,?,?,?,?,?,?,?) }";
             st = con.prepareCall(sql);
             st.setString(1, name);
             st.setString(2, surname);
@@ -376,6 +382,7 @@ public class DatabaseModule {
             st.setString(8, password);
             st.setInt(9, intBorrowed);
             st.setInt(10, id);
+            st.setString(11, login);
 
             st.execute();
         } catch (SQLException e) {

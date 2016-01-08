@@ -40,6 +40,7 @@ public class UpdateClientButton extends ClientButton
         String strDaysToReturnBook = "";
         String strPrivileges = "";
         String strPassword = "";
+        String strLogin = "";
 
         if (name != null)
             strName = name.getText();
@@ -57,10 +58,12 @@ public class UpdateClientButton extends ClientButton
             strPrivileges = privileges.getText();
         if (password != null)
             strPassword = password.getText();
+        if (login != null)
+            strLogin = login.getText();
 
         boolean successs = dbModule.updateClient(strName, strSurname,
                 strAddress, strDateOfBirth, strMaxBorrowed,
-                strDaysToReturnBook, strPrivileges, strPassword, client.borrowed, client.id);
+                strDaysToReturnBook, strPrivileges, strPassword, client.borrowed, client.id, strLogin);
         if (successs) {
             ClientsTableModel model = (ClientsTableModel) panel.getTable().getModel();
             int row = panel.getTable().getSelectedRow();
@@ -76,6 +79,7 @@ public class UpdateClientButton extends ClientButton
             newClient.password = strPassword;
             newClient.id = client.id;
             newClient.privileges = Integer.valueOf(strPrivileges);
+            newClient.login = strLogin;
 
             model.updateRow(row, newClient);
 

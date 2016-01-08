@@ -16,4 +16,5 @@ public class Client {
     public int privileges;
     public String password;
     public int id;
+    public String login;
 }

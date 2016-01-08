@@ -9,9 +9,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import Employee.DocumentFilters.ISBNDocumentFilter;
 import Employee.DataStructures.Book;
-import Employee.*;
+import Employee.DataStructures.Employee;
+import Employee.DocumentFilters.ISBNDocumentFilter;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 
@@ -20,7 +20,7 @@ import javafx.scene.control.SelectionModel;
  */
 public class BooksPanel extends JPanel {
     private MyFrame frame;
-    private String user;
+    private Employee user;
     private DatabaseModule dbModule;
 
     private JPanel sidebarPanel;
@@ -50,7 +50,7 @@ public class BooksPanel extends JPanel {
     private BooksTableModel booksTableModel;
 
 
-    public BooksPanel(MyFrame frame, String user, DatabaseModule dbModule) {
+    public BooksPanel(MyFrame frame, Employee user, DatabaseModule dbModule) {
         this.frame = frame;
         this.user = user;
         this.dbModule = dbModule;
@@ -92,7 +92,7 @@ public class BooksPanel extends JPanel {
         booksTable.getTableHeader().setReorderingAllowed(false);
 
         //Temporary tableModel
-        booksTable.setModel(new BooksTableModel(new ArrayList<Employee.DataStructures.Book>()));
+        booksTable.setModel(new BooksTableModel(new ArrayList<Book>()));
 
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -118,7 +118,7 @@ public class BooksPanel extends JPanel {
                 String strGenre = genre.getText();
                 String strAuthor = author.getText();
 
-                ArrayList<Employee.DataStructures.Book> books = dbModule.getBooks(strIsbn,
+                ArrayList<Book> books = dbModule.getBooks(strIsbn,
                         strTitle, strGenre, strAuthor);
 
                 booksTableModel = new BooksTableModel(books);
@@ -193,9 +193,18 @@ public class BooksPanel extends JPanel {
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         sidebarPanel.add(searchButton);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 190)));
-        sidebarPanel.add(managementDescription);
-        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        sidebarPanel.add(managementPanel);
+
+        if (user.privileges >= 2) {
+            sidebarPanel.add(managementDescription);
+            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+            sidebarPanel.add(managementPanel);
+        }
+        else {
+            Dimension dim = sidebarPanel.getMaximumSize();
+            dim.height = 300;
+            sidebarPanel.setMaximumSize(dim);
+            sidebarPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+        }
 
 
         scrollPane = new JScrollPane(booksTable);

@@ -10,6 +10,7 @@ import javax.swing.*;
  * Created by darek on 02.01.2016.
  */
 public class ClientButton extends JButton {
+    protected JTextField login;
     protected JTextField name;
     protected JTextField surname;
     protected JTextField address;
@@ -33,9 +34,12 @@ public class ClientButton extends JButton {
         this.ownerFrame = ownerFrame;
     }
 
-    public void linkFields(JTextField name, JTextField surname, JTextField address, JTextField dateOfBirth,
+    public void linkFields(JTextField login, JTextField name, JTextField surname, JTextField address,
+                           JTextField dateOfBirth,
                            JTextField maxBorrowed, JTextField daysToReturnBook, JTextField privileges,
                            JTextField password) {
+
+        this.login = login;
         this.name = name;
         this.surname = surname;
         this.address = address;

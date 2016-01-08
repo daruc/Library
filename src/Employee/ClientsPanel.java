@@ -1,6 +1,7 @@
 package Employee;
 
 import Employee.DataStructures.Client;
+import Employee.DataStructures.Employee;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class ClientsPanel extends JPanel {
     private JFrame frame;
     private DatabaseModule databaseModule;
-    private String user;
+    private Employee user;
 
     private JPanel sidebarPanel;
     private JLabel searchDescription;
@@ -63,7 +64,6 @@ public class ClientsPanel extends JPanel {
 
         searchButton = new JButton("Szukaj");
 
-
         managementDescription = new JLabel("Zarządzanie");
         managementPanel = new JPanel();
         managementPanel.setLayout(new GridLayout(2, 2));
@@ -73,7 +73,6 @@ public class ClientsPanel extends JPanel {
         managementPanel.add(addButton);
         managementPanel.add(deleteButton);
         managementPanel.add(editButton);
-
 
         booksDescription = new JLabel("Wypożyczenia książek");
         booksPanel = new JPanel();
@@ -95,13 +94,23 @@ public class ClientsPanel extends JPanel {
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         sidebarPanel.add(searchButton);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 80)));
-        sidebarPanel.add(managementDescription);
-        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        sidebarPanel.add(managementPanel);
-        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 80)));
-        sidebarPanel.add(booksDescription);
-        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        sidebarPanel.add(booksPanel);
+
+        if (user.privileges >= 2) {
+            sidebarPanel.add(managementDescription);
+            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+            sidebarPanel.add(managementPanel);
+            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 80)));
+            sidebarPanel.add(booksDescription);
+            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+            sidebarPanel.add(booksPanel);
+        }
+        else {
+            sidebarPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+            Dimension dim = sidebarPanel.getMaximumSize();
+            dim.height = 200;
+            sidebarPanel.setMaximumSize(dim);
+        }
+
 
 
         clientsTable = new JTable();
@@ -240,7 +249,7 @@ public class ClientsPanel extends JPanel {
 
     }
 
-    public ClientsPanel(MyFrame frame, String user, DatabaseModule dbModule) {
+    public ClientsPanel(MyFrame frame, Employee user, DatabaseModule dbModule) {
         this.frame = frame;
         this.databaseModule = dbModule;
         this.user = user;

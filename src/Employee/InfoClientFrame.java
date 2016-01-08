@@ -12,6 +12,7 @@ import java.awt.*;
 public class InfoClientFrame extends MyFrame {
     private Client client;
 
+    private JLabel labelLogin;
     private JLabel labelName;
     private JLabel labelSurname;
     private JLabel labelAddress;
@@ -21,6 +22,7 @@ public class InfoClientFrame extends MyFrame {
     private JLabel labelDaysToReturnBook;
     private JLabel labelPrivileges;
 
+    private JLabel login;
     private JLabel name;
     private JLabel surname;
     private JLabel address;
@@ -30,6 +32,7 @@ public class InfoClientFrame extends MyFrame {
     private JLabel daysToReturnBooks;
     private JLabel privileges;
 
+    private JPanel panelLogin;
     private JPanel panelName;
     private JPanel panelSurname;
     private JPanel panelAddress;
@@ -40,6 +43,7 @@ public class InfoClientFrame extends MyFrame {
     private JPanel panelPrivileges;
 
     public void drawGUI() {
+        labelLogin = new JLabel("Login: ");
         labelName = new JLabel("Imię: ");
         labelSurname = new JLabel("Nazwisko: ");
         labelAddress = new JLabel("Adres: ");
@@ -49,6 +53,7 @@ public class InfoClientFrame extends MyFrame {
         labelDaysToReturnBook = new JLabel("Dni do oddania: ");
         labelPrivileges = new JLabel("Poziom: ");
 
+        login = new JLabel(client.login);
         name = new JLabel(client.name);
         surname = new JLabel(client.surname);
         address = new JLabel(client.address);
@@ -58,6 +63,7 @@ public class InfoClientFrame extends MyFrame {
         daysToReturnBooks = new JLabel(Integer.toString(client.days_to_return_book));
         privileges = new JLabel(Integer.toString(client.privileges));
 
+        panelLogin = new JPanel();
         panelName = new JPanel();
         panelSurname = new JPanel();
         panelAddress = new JPanel();
@@ -67,6 +73,7 @@ public class InfoClientFrame extends MyFrame {
         panelDaysToReturnBook = new JPanel();
         panelPrivileges = new JPanel();
 
+        panelLogin.setBorder(new EmptyBorder(10,10,10,10));
         panelName.setBorder(new EmptyBorder(10,10,10,10));
         panelSurname.setBorder(new EmptyBorder(10,10,10,10));
         panelAddress.setBorder(new EmptyBorder(10,10,10,10));
@@ -76,6 +83,7 @@ public class InfoClientFrame extends MyFrame {
         panelDaysToReturnBook.setBorder(new EmptyBorder(10,10,10,10));
         panelPrivileges.setBorder(new EmptyBorder(10,10,10,10));
 
+        panelLogin.setLayout(new BoxLayout(panelLogin, BoxLayout.X_AXIS));
         panelName.setLayout(new BoxLayout(panelName, BoxLayout.X_AXIS));
         panelSurname.setLayout(new BoxLayout(panelSurname, BoxLayout.X_AXIS));
         panelAddress.setLayout(new BoxLayout(panelAddress, BoxLayout.X_AXIS));
@@ -85,6 +93,7 @@ public class InfoClientFrame extends MyFrame {
         panelDaysToReturnBook.setLayout(new BoxLayout(panelDaysToReturnBook, BoxLayout.X_AXIS));
         panelPrivileges.setLayout(new BoxLayout(panelPrivileges, BoxLayout.X_AXIS));
 
+        panelLogin.setBorder(new EmptyBorder(10,10,10,10));
         panelName.setBorder(new EmptyBorder(10,10,10,10));
         panelSurname.setBorder(new EmptyBorder(10,10,10,10));
         panelAddress.setBorder(new EmptyBorder(10,10,10,10));
@@ -94,6 +103,7 @@ public class InfoClientFrame extends MyFrame {
         panelDaysToReturnBook.setBorder(new EmptyBorder(10,10,10,10));
         panelPrivileges.setBorder(new EmptyBorder(10,10,10,10));
 
+        panelLogin.setAlignmentX(Component.LEFT_ALIGNMENT);
         panelName.setAlignmentX(Component.LEFT_ALIGNMENT);
         panelSurname.setAlignmentX(Component.LEFT_ALIGNMENT);
         panelAddress.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -103,6 +113,8 @@ public class InfoClientFrame extends MyFrame {
         panelDaysToReturnBook.setAlignmentX(Component.LEFT_ALIGNMENT);
         panelPrivileges.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        panelLogin.add(labelLogin);
+        panelLogin.add(login);
         panelName.add(labelName);
         panelName.add(name);
         panelSurname.add(labelSurname);
@@ -121,6 +133,7 @@ public class InfoClientFrame extends MyFrame {
         panelPrivileges.add(privileges);
 
         Font font = new Font(name.getFont().getName(), Font.BOLD, name.getFont().getSize());
+        labelLogin.setFont(font);
         labelName.setFont(font);
         labelSurname.setFont(font);
         labelAddress.setFont(font);
@@ -131,6 +144,7 @@ public class InfoClientFrame extends MyFrame {
         labelPrivileges.setFont(font);
 
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        add(panelLogin);
         add(panelName);
         add(panelSurname);
         add(panelAddress);
@@ -147,7 +161,7 @@ public class InfoClientFrame extends MyFrame {
 
         drawGUI();
         setVisible(true);
-        setSize(300, 310);
+        setSize(300, 340);
         setResizable(false);
         setLocationRelativeTo(null);
     }

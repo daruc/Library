@@ -16,7 +16,7 @@ public class AddClientFrame extends AbstractClientFrame {
     @Override
     public void setSaveButton() {
         saveButton = new AddClientButton("Zapisz", this, getDatabaseModule());
-        saveButton.linkFields(name, surname, address, dateOfBirth,
+        saveButton.linkFields(login, name, surname, address, dateOfBirth,
                 maxBorrowed, daysToReturnBook, privileges, password);
         panelButtons.add(saveButton);
     }

@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
  * Created by darek on 02.01.2016.
  */
 public abstract class AbstractClientFrame extends MyFrame {
+    protected JLabel labelLogin;
     protected JLabel labelName;
     protected JLabel labelSurname;
     protected JLabel labelAddress;
@@ -22,6 +23,7 @@ public abstract class AbstractClientFrame extends MyFrame {
     protected JLabel labelPrivileges;
     protected JLabel labelPassword;
 
+    protected JTextField login;
     protected JTextField name;
     protected JTextField surname;
     protected JTextField address;
@@ -37,6 +39,7 @@ public abstract class AbstractClientFrame extends MyFrame {
     protected JPanel panelButtons;
 
     public void drawGUI() {
+        labelLogin = new JLabel("Login: ");
         labelName = new JLabel("Imię: ");
         labelSurname = new JLabel("Nazwisko: ");
         labelAddress = new JLabel("Adres: ");
@@ -46,6 +49,7 @@ public abstract class AbstractClientFrame extends MyFrame {
         labelPrivileges = new JLabel("Poziom: ");
         labelPassword = new JLabel("Hasło: ");
 
+        login = new JTextField();
         name = new JTextField();
         surname = new JTextField();
         address = new JTextField();
@@ -56,8 +60,10 @@ public abstract class AbstractClientFrame extends MyFrame {
         password = new JTextField();
 
         panelFields = new JPanel();
-        panelFields.setLayout(new GridLayout(8, 2));
+        panelFields.setLayout(new GridLayout(0, 2));
 
+        panelFields.add(labelLogin);
+        panelFields.add(login);
         panelFields.add(labelName);
         panelFields.add(name);
         panelFields.add(labelSurname);
@@ -112,7 +118,7 @@ public abstract class AbstractClientFrame extends MyFrame {
     public AbstractClientFrame(String title, DatabaseModule dbModule) {
         super(title, dbModule);
         drawGUI();
-        setSize(270, 230);
+        setSize(270, 250);
         setVisible(true);
         setResizable(false);
         setLocationRelativeTo(null);
