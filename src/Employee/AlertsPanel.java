@@ -1,6 +1,7 @@
 package Employee;
 
 import Employee.DataStructures.Alert;
+import Employee.TableModels.AlertsTableModel;
 
 import javax.swing.*;
 import java.awt.*;

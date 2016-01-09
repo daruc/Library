@@ -1,6 +1,6 @@
-package Employee;
+package Employee.TableModels;
 
-import Employee.DataStructures.Alert;
+import Employee.DataStructures.BorrowedBook;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -8,21 +8,21 @@ import java.util.ArrayList;
 /**
  * Created by darek on 07.01.2016.
  */
-public class AlertsTableModel extends AbstractTableModel {
-    ArrayList<Alert> alerts;
+public class BorrowedTableModel extends AbstractTableModel {
+    private ArrayList<BorrowedBook> books;
 
-    public AlertsTableModel(ArrayList<Alert> alerts) {
-        this.alerts = alerts;
+    public BorrowedTableModel(ArrayList<BorrowedBook> books) {
+        this.books = books;
     }
 
     @Override
     public int getRowCount() {
-        return alerts.size();
+        return books.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 3;
     }
 
     @Override
@@ -30,17 +30,14 @@ public class AlertsTableModel extends AbstractTableModel {
         String value = "";
         switch (columnIndex) {
             case 0:
-                value = alerts.get(rowIndex).book.isbn;
+                value = books.get(rowIndex).isbn;
                 break;
             case 1:
-                value = alerts.get(rowIndex).client.name + " "
-                        + alerts.get(rowIndex).client.surname;
+                value = books.get(rowIndex).borrowed.toString();
                 break;
             case 2:
-                value = alerts.get(rowIndex).borrow_date.toString();
+                value = books.get(rowIndex).return_date.toString();
                 break;
-            case 3:
-                value = alerts.get(rowIndex).return_date.toString();
         }
         return value;
     }
@@ -54,18 +51,19 @@ public class AlertsTableModel extends AbstractTableModel {
                 name = "ISBN";
                 break;
             case 1:
-                name = "Czytelnik";
-                break;
-            case 2:
                 name = "Data wypożyczenia";
                 break;
-            case 3:
+            case 2:
                 name = "Termin oddania";
                 break;
         }
-
         return name;
     }
 
-    public Alert getAlert(int row) { return alerts.get(row); }
+    public BorrowedBook getBorrowedBook(int row) { return books.get(row); }
+
+    public void removeRow(int index) {
+        fireTableRowsDeleted(index, index);
+        books.remove(index);
+    }
 }

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Employee.DataStructures.Book;
+import Employee.TableModels.BooksTableModel;
 
 /**
  * Created by darek on 31.12.2015.

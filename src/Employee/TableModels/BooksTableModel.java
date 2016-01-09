@@ -1,4 +1,4 @@
-package Employee;
+package Employee.TableModels;
 
 import javax.swing.table.AbstractTableModel;
 import Employee.DataStructures.Book;

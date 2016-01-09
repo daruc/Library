@@ -2,6 +2,7 @@ package Employee.Buttons;
 
 import Employee.*;
 import Employee.DataStructures.Client;
+import Employee.TableModels.ClientsTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

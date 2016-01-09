@@ -1,5 +1,7 @@
 package Employee;
 
+import Employee.Buttons.LogoutButton;
+
 import javax.swing.*;
 import java.awt.*;
 

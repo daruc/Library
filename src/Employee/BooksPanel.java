@@ -3,7 +3,6 @@ package Employee;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableModel;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,8 +11,7 @@ import java.util.ArrayList;
 import Employee.DataStructures.Book;
 import Employee.DataStructures.Employee;
 import Employee.DocumentFilters.ISBNDocumentFilter;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.SelectionModel;
+import Employee.TableModels.BooksTableModel;
 
 /**
  * Created by darek on 29.11.2015.

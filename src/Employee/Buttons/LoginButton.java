@@ -1,4 +1,4 @@
-package Employee;
+package Employee.Buttons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

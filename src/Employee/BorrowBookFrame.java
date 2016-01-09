@@ -2,6 +2,7 @@ package Employee;
 
 import Employee.DataStructures.Book;
 import Employee.DataStructures.Client;
+import Employee.TableModels.BooksTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

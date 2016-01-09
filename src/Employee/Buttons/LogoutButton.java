@@ -1,4 +1,7 @@
-package Employee;
+package Employee.Buttons;
+
+import Employee.LoginFrame;
+import Employee.MyFrame;
 
 import javax.swing.*;
 import java.awt.*;

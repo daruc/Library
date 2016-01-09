@@ -1,4 +1,4 @@
-package Employee;
+package Employee.DataStructures;
 
 /**
  * Created by darek on 28.11.2015.

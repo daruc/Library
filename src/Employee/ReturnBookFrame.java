@@ -2,6 +2,7 @@ package Employee;
 
 import Employee.DataStructures.BorrowedBook;
 import Employee.DataStructures.Client;
+import Employee.TableModels.BorrowedTableModel;
 
 import javax.swing.*;
 import java.awt.*;

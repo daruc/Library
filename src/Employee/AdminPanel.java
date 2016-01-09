@@ -1,7 +1,7 @@
 package Employee;
 
-import Employee.Buttons.UpdateEmployeeButton;
 import Employee.DataStructures.Employee;
+import Employee.TableModels.EmployeesTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

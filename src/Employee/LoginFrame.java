@@ -1,5 +1,7 @@
 package Employee;
 
+import Employee.Buttons.LoginButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

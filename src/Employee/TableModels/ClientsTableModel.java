@@ -1,4 +1,4 @@
-package Employee;
+package Employee.TableModels;
 
 import Employee.DataStructures.Book;
 import Employee.DataStructures.Client;
