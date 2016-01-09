@@ -8,10 +8,8 @@ import java.awt.*;
  */
 public class InfoPanel extends JPanel {
     private MyFrame frame;
-    private String user;
+    private Employee.DataStructures.Employee user;
     private DatabaseModule dbModule;
-
-    private String[] userInfo;
 
     private JPanel panel;
 
@@ -31,33 +29,26 @@ public class InfoPanel extends JPanel {
 
     private LogoutButton logoutButton;
 
-    public InfoPanel(MyFrame frame, String user, DatabaseModule dbModule) {
+    public InfoPanel(MyFrame frame, Employee.DataStructures.Employee user, DatabaseModule dbModule) {
         super();
         this.dbModule = dbModule;
         this.user = user;
         this.frame = frame;
 
-        try {
-            userInfo = dbModule.getEmployee(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         informations = new JLabel("Informacje o zalogowanym pracowniku");
         informations.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginDescription = new JLabel("Login: ");
-        login = new JLabel(userInfo[0]);
+        login = new JLabel(user.login);
         nameDescription = new JLabel("Imię: ");
-        name = new JLabel(userInfo[1]);
+        name = new JLabel(user.name);
         surnameDescription = new JLabel("Nazwisko: ");
-        surname = new JLabel(userInfo[2]);
+        surname = new JLabel(user.surname);
         addressDescription = new JLabel("Adres: ");
-        address = new JLabel(userInfo[3]);
+        address = new JLabel(user.address);
         dateOfBirthDescription = new JLabel("Data urodzenia: ");
-        dateOfBirth = new JLabel(userInfo[4]);
+        dateOfBirth = new JLabel(user.date_of_birth.toString());
         privilegesDescription = new JLabel("Poziom: ");
-        privileges = new JLabel(userInfo[5]);
+        privileges = new JLabel(String.valueOf(user.privileges));
 
         logoutButton = new LogoutButton("Wyloguj", frame);
         logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);

@@ -26,7 +26,7 @@ public class MainFrame extends MyFrame {
         setSize(700, 500);
 
         tabbedPane = new JTabbedPane();
-        infoPanel = new InfoPanel(this, user, super.getDatabaseModule());
+        infoPanel = new InfoPanel(this, employee, super.getDatabaseModule());
         booksPanel = new BooksPanel(this, employee, getDatabaseModule());
         clientsPanel = new ClientsPanel(this, employee, getDatabaseModule());
         alertsPanel = new AlertsPanel(this, getDatabaseModule());
