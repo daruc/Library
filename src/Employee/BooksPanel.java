@@ -145,7 +145,7 @@ public class BooksPanel extends JPanel {
                 if (e.getClickCount() == 2) {
                     BooksTableModel model = (BooksTableModel) booksTable.getModel();
                     Book book = model.getBook(row);
-                    EventQueue.invokeLater(() -> new InfoBookFrame("Opis książki", dbModule, book));
+                    EventQueue.invokeLater(() -> new InfoBookFrame("Opis książki", dbModule, book, true));
                 }
             }
         });

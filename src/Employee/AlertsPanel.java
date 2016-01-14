@@ -59,7 +59,8 @@ public class AlertsPanel extends JPanel {
                     int column = table.columnAtPoint(p);
                     Alert alert = model.getAlert(row);
                     if (column == 0) {
-                        EventQueue.invokeLater(() -> new InfoBookFrame("Szczegóły książki", dbModule, alert.book));
+                        EventQueue.invokeLater(
+                                () -> new InfoBookFrame("Szczegóły książki", dbModule, alert.book, false));
                     }
                     else if (column == 1) {
                         EventQueue.invokeLater(() -> new InfoClientFrame("Sczegóły klienta", dbModule, alert.client));

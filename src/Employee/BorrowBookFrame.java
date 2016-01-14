@@ -127,7 +127,7 @@ public class BorrowBookFrame extends MyFrame {
                     BooksTableModel model = (BooksTableModel) booksTable.getModel();
                     Book book = model.getBook(row);
                     EventQueue.invokeLater(() -> new InfoBookFrame("Szczegóły książki",
-                            getDatabaseModule(), book));
+                            getDatabaseModule(), book, true));
                 }
             }
         });

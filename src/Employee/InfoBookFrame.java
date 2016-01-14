@@ -36,6 +36,8 @@ public class InfoBookFrame extends MyFrame {
     private JPanel numberOfBooksPanel;
     private JPanel borrowedPanel;
 
+    private boolean extended;
+
     public void drawGUI() {
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -122,16 +124,23 @@ public class InfoBookFrame extends MyFrame {
         add(authorPanel);
         add(genrePanel);
         add(descriptionPanel);
-        add(numberOfBooksPanel);
-        add(borrowedPanel);
+
+        if (extended) {
+            add(numberOfBooksPanel);
+            add(borrowedPanel);
+        }
     }
 
-    public InfoBookFrame(String title, DatabaseModule dbModule, Book book) {
+    public InfoBookFrame(String title, DatabaseModule dbModule, Book book, boolean ext) {
         super(title, dbModule);
         this.book = book;
+        extended = ext;
 
         drawGUI();
-        setSize(270, 330);
+        if (extended)
+            setSize(270, 330);
+        else
+            setSize(270, 290);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
